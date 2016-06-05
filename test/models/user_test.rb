@@ -2,19 +2,13 @@
 require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
-  def setup
-    @user = build(:user)
-  end
+  should validate_uniqueness_of(:email)
 
-  test "should not save without complete attributes" do
-    user = User.new
-    assert_not user.save
-  end
+  should validate_presence_of(:firstname)
 
-  test "should save with complete attributes" do
-    test_user = User.new(firstname: @user.firstname,
-                         lastname: @user.lastname,
-                         email: @user.email)
-    assert test_user.save
-  end
+  should validate_presence_of(:lastname)
+
+  should validate_presence_of(:email)
+
+  should have_many(:checklists)
 end
