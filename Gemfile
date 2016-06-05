@@ -24,6 +24,8 @@ gem "rubocop"
 
 group :development, :test do
   gem "byebug"
+  gem "pry"
+  gem "factory_girl_rails"
 end
 
 group :development do
