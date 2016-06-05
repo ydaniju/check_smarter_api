@@ -2,7 +2,6 @@
 FactoryGirl.define do
   factory :checklist do
     title Faker::Name.first_name
-    comments
-    votes
+    user_id user
   end
 end
