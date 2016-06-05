@@ -5,11 +5,7 @@ module Api
       def index
         # this should later be replaced by current_user.checklists
         checklists = Checklist.all
-        if checklists
-          render json: checklists, status: 200
-        else
-          render json: { feedback: "You have no Checklist yet" }, status: 404
-        end
+        render json: checklists, status: 200 if checklists
       end
 
       def show

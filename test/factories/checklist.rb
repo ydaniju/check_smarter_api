@@ -2,6 +2,6 @@
 FactoryGirl.define do
   factory :checklist do
     title Faker::Name.first_name
-    user_id user
+    user
   end
 end
