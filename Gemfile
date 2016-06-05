@@ -8,6 +8,7 @@ gem "pg"
 # Use Puma as the app server
 gem "puma"
 gem "rubocop"
+gem "coveralls", require: false
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.0'
 # Use Redis adapter to run Action Cable in production
@@ -24,6 +25,14 @@ gem "rubocop"
 
 group :development, :test do
   gem "byebug"
+  gem "pry"
+  gem "factory_girl_rails"
+  gem "faker"
+end
+
+group :test do
+  gem "shoulda", "~> 3.5"
+  gem "shoulda-matchers", "~> 2.0"
 end
 
 group :development do
