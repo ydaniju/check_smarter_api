@@ -31,7 +31,9 @@ class UsersControllerTest < ActionController::TestCase
     post :create, params: {
       firstname: @user.firstname,
       lastname: @user.lastname,
-      email: @user.email
+      email: @user.email,
+      password: @user.password,
+      password_confirmation: @user.password_confirmation
     }
 
     assert_response :created
