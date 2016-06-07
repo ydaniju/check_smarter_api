@@ -11,7 +11,8 @@ class ChecklistsControllerTest < ActionController::TestCase
   test "display all checklist if authorized" do
     @request.headers["Authorization"] = @token
     get :index, params: {
-      user_id: @checklist.user_id
+      user_id: @checklist.user_id,
+      format: :json
     }
 
     assert_response :success
@@ -30,7 +31,8 @@ class ChecklistsControllerTest < ActionController::TestCase
     @checklist.save
     get :show, params: {
       user_id: @checklist.user_id,
-      id: @checklist.id
+      id: @checklist.id,
+      format: :json
     }
 
     assert_response :success
@@ -72,7 +74,8 @@ class ChecklistsControllerTest < ActionController::TestCase
     @request.headers["Authorization"] = @token
     post :create, params: {
       title: @checklist.title,
-      user_id: @checklist.user_id
+      user_id: @checklist.user_id,
+      format: :json
     }
 
     assert_response :success

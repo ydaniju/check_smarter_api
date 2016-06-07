@@ -2,27 +2,23 @@
 module Api
   module V1
     class ChecklistsController < BaseController
-      before_action :authenticate_request!
+      before_action :authenticate_request!, :checklist
       def index
-        # this should later be replaced by current_user.checklists
         checklists = current_user.checklists
         render json: checklists, status: 200 if checklists
       end
 
       def show
-        if checklist
-          render json: checklist, status: 200
-        else
-          render json: { errors: "This checklist does not exist" }, status: 404
-        end
+        render json: { errors: "Checklist does not exist" },
+               status: 404 unless @checklist
       end
 
       def create
-        new_checklist = Checklist.new(checklist_params)
-        if new_checklist.save
-          render json: new_checklist, status: 201
+        @checklist = Checklist.new(checklist_params)
+        if @checklist.save
+          render :show, status: 201
         else
-          render json: { errors: new_checklist.errors }, status: 422
+          render json: { errors: @checklist.errors }, status: 422
         end
       end
 
@@ -33,7 +29,7 @@ module Api
       end
 
       def checklist
-        Checklist.find_by(id: params[:id])
+        @checklist = Checklist.find_by(id: params[:id])
       end
     end
   end
