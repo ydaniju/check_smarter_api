@@ -2,9 +2,10 @@
 module Api
   module V1
     class ChecklistsController < BaseController
+      before_action :authenticate_request!
       def index
         # this should later be replaced by current_user.checklists
-        checklists = Checklist.all
+        checklists = current_user.checklists
         render json: checklists, status: 200 if checklists
       end
 
