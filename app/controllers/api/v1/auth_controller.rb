@@ -2,24 +2,21 @@
 module Api
   module V1
     class AuthController < BaseController
-      def authenticate_user
-        user = User.find_for_database_authentication(email: params[:email])
-        if user.valid_password?(params[:password])
-          render json: payload(user)
+      before_action :authenticate_request, only: [:logout]
+
+      def login
+        command = AuthenticateUser.call(params[:email], params[:password])
+
+        if command.success?
+          render json: command.result
         else
-          render json: { errors: ["Invalid Username/Password"] },
-                 status: :unauthorized
+          render json: command.errors, status: :unauthorized
         end
       end
 
-      private
-
-      def payload(user)
-        return nil unless user && user.id
-        {
-          auth_token: JsonWebToken.encode(user_id: user.id),
-          user: { id: user.id, email: user.email }
-        }
+      def logout
+        current_user.update_attribute(:auth_token, nil)
+        render json: { feedback: "You're succesfully logged out" }
       end
     end
   end

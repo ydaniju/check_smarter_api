@@ -10,6 +10,7 @@ gem "jbuilder", "~> 2.0"
 gem "devise"
 gem "jwt", "~> 1.5", ">= 1.5.4"
 gem "rack-cors"
+gem "simple_command"
 
 group :development, :test do
   gem "pry"
