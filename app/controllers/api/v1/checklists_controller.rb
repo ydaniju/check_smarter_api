@@ -4,8 +4,7 @@ module Api
     class ChecklistsController < BaseController
       before_action :authenticate_request!, :checklist
       def index
-        checklists = current_user.checklists
-        render json: checklists, status: 200 if checklists
+        @checklists = current_user.checklists
       end
 
       def show
@@ -14,12 +13,25 @@ module Api
       end
 
       def create
-        @checklist = Checklist.new(checklist_params)
+        @checklist = current_user.checklists.new checklist_params
         if @checklist.save
           render :show, status: 201
         else
           render json: { errors: @checklist.errors }, status: 422
         end
+      end
+
+      def update
+        if @checklist.update checklist_params
+          render :show, status: 201
+        else
+          render json: { errors: @checklist.errors }, status: 422
+        end
+      end
+
+      def destroy
+        @checklist.destroy
+        head 204
       end
 
       private
@@ -29,7 +41,7 @@ module Api
       end
 
       def checklist
-        @checklist = Checklist.find_by(id: params[:id])
+        @checklist = current_user.checklists.find_by(id: params[:id])
       end
     end
   end
