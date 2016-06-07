@@ -36,7 +36,18 @@ class ChecklistsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "doesn't show checklist if unauthorized" do
+  test "doesn't show checklist if no token" do
+    @checklist.save
+    get :show, params: {
+      user_id: @checklist.user_id,
+      id: @checklist.id
+    }
+
+    assert_response :unauthorized
+  end
+
+  test "doesn't show checklist if token is invalid" do
+    @request.headers["Authorization"] = "invalid_token"
     @checklist.save
     get :show, params: {
       user_id: @checklist.user_id,
