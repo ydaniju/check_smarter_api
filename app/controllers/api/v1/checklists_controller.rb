@@ -41,7 +41,7 @@ module Api
       end
 
       def checklist
-        @checklist = current_user.checklists.find_by(id: params[:id])
+        @checklist = Checklist.find_by(id: params[:id])
       end
     end
   end
