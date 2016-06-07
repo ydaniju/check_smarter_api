@@ -22,8 +22,8 @@ class AuthenticateUser
   attr_accessor :email, :password
 
   def user
-    user = User.find_for_database_authentication(email: email)
-    return user if user.valid_password?(password)
+    auth_user = User.find_for_database_authentication(email: email)
+    return auth_user if auth_user && auth_user.valid_password?(password)
 
     errors.add :errors, "Incorrect email/password combination"
     nil
