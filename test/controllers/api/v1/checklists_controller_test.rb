@@ -8,17 +8,21 @@ class ChecklistsControllerTest < ActionController::TestCase
     @token = token_builder(@checklist.user)
   end
 
-  # def token_builder(user)
-  #   JsonWebToken.encode(user_id: user.id)
-  # end
-
-  test "display all checklist" do
+  test "display all checklist if authorized" do
     @request.headers["Authorization"] = @token
     get :index, params: {
       user_id: @checklist.user_id
     }
 
     assert_response :success
+  end
+
+  test "display error checklist if unauthorized" do
+    get :index, params: {
+      user_id: @checklist.user_id
+    }
+
+    assert_response :unauthorized
   end
 
   test "show checklist if exist" do
@@ -30,6 +34,16 @@ class ChecklistsControllerTest < ActionController::TestCase
     }
 
     assert_response :success
+  end
+
+  test "doesn't show checklist if unauthorized" do
+    @checklist.save
+    get :show, params: {
+      user_id: @checklist.user_id,
+      id: @checklist.id
+    }
+
+    assert_response :unauthorized
   end
 
   test "show missing if checklist does not exist" do
