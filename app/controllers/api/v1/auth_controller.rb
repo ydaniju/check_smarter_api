@@ -13,11 +13,6 @@ module Api
           render json: command.errors, status: :unauthorized
         end
       end
-
-      def logout
-        # current_user.update_attribute(:auth_token, nil) not yet implemented
-        render json: { success: "You're succesfully logged out" }, status: 204
-      end
     end
   end
 end

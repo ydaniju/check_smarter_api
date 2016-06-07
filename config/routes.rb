@@ -4,7 +4,7 @@ CheckSmarterApi::Application.routes.draw do
 
   namespace :api, defaults: { format: "json" } do
     namespace :v1 do
-      post "users/login" => "auth#login"
+      post "users/login", to: "auth#login"
       resources :users, except: [:index] do
         resources :checklists
       end
