@@ -11,7 +11,8 @@ class ChecklistsControllerTest < ActionController::TestCase
   test "display all checklist if authorized" do
     @request.headers["Authorization"] = @token
     get :index, params: {
-      user_id: @checklist.user_id
+      user_id: @checklist.user_id,
+      format: :json
     }
 
     assert_response :success
@@ -30,7 +31,8 @@ class ChecklistsControllerTest < ActionController::TestCase
     @checklist.save
     get :show, params: {
       user_id: @checklist.user_id,
-      id: @checklist.id
+      id: @checklist.id,
+      format: :json
     }
 
     assert_response :success
@@ -72,7 +74,8 @@ class ChecklistsControllerTest < ActionController::TestCase
     @request.headers["Authorization"] = @token
     post :create, params: {
       title: @checklist.title,
-      user_id: @checklist.user_id
+      user_id: @checklist.user_id,
+      format: :json
     }
 
     assert_response :success
@@ -85,5 +88,40 @@ class ChecklistsControllerTest < ActionController::TestCase
     }
 
     assert_response :unprocessable_entity
+  end
+
+  test "successful update of checklist" do
+    @checklist.save
+    @request.headers["Authorization"] = @token
+    put :update, params: {
+      user_id: @checklist.user_id,
+      id: @checklist.id,
+      title: "Laplace",
+      format: :json
+    }
+  end
+
+  test "unsuccessful update of checklist when title is incorrect" do
+    @checklist.save
+    @request.headers["Authorization"] = @token
+    put :update, params: {
+      user_id: @checklist.user_id,
+      id: @checklist.id,
+      title: nil,
+      format: :json
+    }
+
+    assert_response :unprocessable_entity
+  end
+
+  test "destroy checklist" do
+    @checklist.save
+    @request.headers["Authorization"] = @token
+    get :destroy, params: {
+      user_id: @checklist.user_id,
+      id: @checklist.id
+    }
+
+    assert_response 204
   end
 end

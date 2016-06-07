@@ -44,7 +44,7 @@ class AuthenticateApiRequest
   end
 
   def match_id_to_user(user_id)
-    user = User.find_by_id(user_id)
+    user = User.find_by(id: user_id)
     errors.add :errors, "Token not valid." unless user
 
     user
