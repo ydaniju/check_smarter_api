@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class AuthenticateApiRequests
+class AuthenticateApiRequest
   prepend SimpleCommand
   attr_reader :headers, :params
 
@@ -51,7 +51,7 @@ class AuthenticateApiRequests
 
   def match_id_to_user(user_id)
     user = User.find_by_id(user_id)
-    errors.add :errors, "Token not valid." unless user && user.token
+    errors.add :errors, "Token not valid." unless user
 
     user
   end

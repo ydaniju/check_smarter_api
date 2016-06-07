@@ -3,6 +3,6 @@ class HomeController < ApplicationController
   before_action :authenticate_request!
 
   def index
-    render json: { message: "Welcome home" }
+    render json: { success: "Welcome home" }
   end
 end

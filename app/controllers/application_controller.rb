@@ -5,7 +5,7 @@ class ApplicationController < ActionController::API
   private
 
   def authenticate_request!
-    api_request_auth = AuthenticateApiRequests.call(request.headers, params)
+    api_request_auth = AuthenticateApiRequest.call(request.headers, params)
 
     if api_request_auth.success?
       @current_user = api_request_auth.result

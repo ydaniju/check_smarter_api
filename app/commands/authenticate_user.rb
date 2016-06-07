@@ -10,7 +10,6 @@ class AuthenticateUser
   def call
     if user
       token = JsonWebToken.encode(user_id: user.id)
-      user.update_attribute(:token, token)
 
       {
         auth_token: token
