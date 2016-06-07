@@ -33,7 +33,8 @@ class UsersControllerTest < ActionController::TestCase
       lastname: @user.lastname,
       email: @user.email,
       password: @user.password,
-      password_confirmation: @user.password_confirmation
+      password_confirmation: @user.password_confirmation,
+      format: :json
     }
 
     assert_response :created
@@ -52,7 +53,8 @@ class UsersControllerTest < ActionController::TestCase
     @user.save
     put :update, params: {
       id: @user.id,
-      firstname: @user.firstname
+      firstname: @user.firstname,
+      format: :json
     }
 
     assert_response :success
