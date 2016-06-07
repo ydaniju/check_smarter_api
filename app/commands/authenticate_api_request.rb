@@ -18,18 +18,12 @@ class AuthenticateApiRequest
     token = get_token
     return if token_not_found? token
 
-    user_by_token token
+    extract_user_from_token token
   end
 
   def get_token
-    auth_header = headers["Authorization"]
-    return token_by_header auth_header if auth_header
-
+    return headers["Authorization"].split(" ")[-1] if headers["Authorization"]
     params[:token]
-  end
-
-  def token_by_header(auth_header)
-    auth_header.split(":").last.split("token").last.strip
   end
 
   def token_not_found?(token)
@@ -40,7 +34,7 @@ class AuthenticateApiRequest
     end
   end
 
-  def user_by_token(token)
+  def extract_user_from_token(token)
     decoded_token = JsonWebToken.decode(token)
     if decoded_token
       match_id_to_user decoded_token["user_id"]

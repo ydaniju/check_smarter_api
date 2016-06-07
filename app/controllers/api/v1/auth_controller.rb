@@ -15,7 +15,7 @@ module Api
       end
 
       def logout
-        # current_user.update_attribute(:auth_token, nil)
+        # current_user.update_attribute(:auth_token, nil) not yet implemented
         render json: { success: "You're succesfully logged out" }, status: 204
       end
     end
