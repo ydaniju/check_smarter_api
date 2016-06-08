@@ -11,6 +11,7 @@ gem "devise"
 gem "jwt", "~> 1.5", ">= 1.5.4"
 gem "rack-cors"
 gem "simple_command"
+gem "yajl-ruby", require: "yajl"
 
 group :development, :test do
   gem "pry"
