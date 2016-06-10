@@ -99,6 +99,8 @@ class ChecklistsControllerTest < ActionController::TestCase
       title: "Laplace",
       format: :json
     }
+
+    assert_response :success
   end
 
   test "unsuccessful update of checklist when title is incorrect" do
